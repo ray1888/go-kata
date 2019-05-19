@@ -3,19 +3,19 @@ package gokata
 import "strconv"
 
 type Parser interface {
-	get_value() interface{}
-	set_value(input []string)
+	getValue() interface{}
+	setValue(input []string)
 }
 
 type BooleanParser struct {
 	val bool
 }
 
-func (bp BooleanParser) get_value() interface{} {
+func (bp *BooleanParser) getValue() interface{} {
 	return bp.val
 }
 
-func (bp BooleanParser) set_value(input []string) {
+func (bp *BooleanParser) setValue(input []string) {
 	// parse Bool parser
 	if len(input) > 1 {
 		bp.val = false
@@ -31,11 +31,11 @@ type StringParser struct {
 	val string
 }
 
-func (sp StringParser) get_value() interface{} {
+func (sp *StringParser) getValue() interface{} {
 	return sp.val
 }
 
-func (sp StringParser) set_value(input []string) {
+func (sp *StringParser) setValue(input []string) {
 	if len(input) != 2 {
 		return
 	}
@@ -48,11 +48,11 @@ type IntParser struct {
 	val int
 }
 
-func (ip IntParser) get_value() interface{} {
+func (ip *IntParser) getValue() interface{} {
 	return ip.val
 }
 
-func (ip IntParser) set_value(input []string) {
+func (ip *IntParser) setValue(input []string) {
 	if len(input) != 2 {
 		return
 	}
@@ -68,11 +68,11 @@ type StringArrayParser struct {
 	val [50]string
 }
 
-func (sap StringArrayParser) get_value() interface{} {
+func (sap *StringArrayParser) getValue() interface{} {
 	return sap.val
 }
 
-func (sap StringArrayParser) set_value(input []string) {
+func (sap *StringArrayParser) setValue(input []string) {
 	if len(input) == 0 {
 		return
 	}
@@ -88,11 +88,11 @@ type IntArrayParser struct {
 	val [50]int
 }
 
-func (iap IntArrayParser) get_value() interface{} {
+func (iap *IntArrayParser) getValue() interface{} {
 	return iap.val
 }
 
-func (iap IntArrayParser) set_value(input []string) {
+func (iap *IntArrayParser) setValue(input []string) {
 	if len(input) == 0 {
 		return
 	}

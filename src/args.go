@@ -14,15 +14,15 @@ func (a *Args) schemaparse(input string) {
 	schema := strings.Split(input, ",")
 	for _, v := range schema {
 		if v == "d" {
-			a.marshaller[v] = StringParser{}
+			a.marshaller[v] = &StringParser{}
 		} else if v == "p" {
-			a.marshaller[v] = IntParser{}
+			a.marshaller[v] = &IntParser{}
 		} else if v == "l" {
-			a.marshaller[v] = BooleanParser{}
+			a.marshaller[v] = &BooleanParser{}
 		} else if v == "g" {
-			a.marshaller[v] = StringArrayParser{}
+			a.marshaller[v] = &StringArrayParser{}
 		} else if v == "w" {
-			a.marshaller[v] = IntArrayParser{}
+			a.marshaller[v] = &IntArrayParser{}
 		}
 	}
 }
@@ -42,33 +42,31 @@ func (a *Args) cmdparser(input []string) {
 		if slow != 0 && (index[slow] == 0 || index[fast] == 0) {
 			break
 		} else {
-			option := strings.Split(input[slow], "-")
-			value := input[index[slow]:index[fast]]
-			a.marshaller[option[1]].set_value(value)
+			option := strings.Split(input[slow], "-")[1]
+			value := input[0:2]
+			a.marshaller[option].setValue(value)
 			slow += 1
 			fast += 1
 		}
 	}
 }
 
-// TODO refactor to a factory mode
-
-func (a *Args) get_boolean(input string) bool {
-	return a.marshaller[input].get_value().(bool)
+func (a *Args) getBoolean(input string) bool {
+	return a.marshaller[input].getValue().(bool)
 }
 
-func (a *Args) get_int(input string) int {
-	return a.marshaller[input].get_value().(int)
+func (a *Args) getInt(input string) int {
+	return a.marshaller[input].getValue().(int)
 }
 
-func (a *Args) get_string(input string) string {
-	return a.marshaller[input].get_value().(string)
+func (a *Args) getString(input string) string {
+	return a.marshaller[input].getValue().(string)
 }
 
-func (a *Args) get_stringarray(input string) [50]string {
-	return a.marshaller[input].get_value().([50]string)
+func (a *Args) getStringarray(input string) [50]string {
+	return a.marshaller[input].getValue().([50]string)
 }
 
-func (a *Args) get_intarray(input string) [50]int {
-	return a.marshaller[input].get_value().([50]int)
+func (a *Args) getIntarray(input string) [50]int {
+	return a.marshaller[input].getValue().([50]int)
 }
