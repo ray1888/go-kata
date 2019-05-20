@@ -36,14 +36,21 @@ func (a *Args) cmdparser(input []string) {
 			lastindex += 1
 		}
 	}
-	fast := 1
 	slow := 0
+	fast := slow + 1
 	for fast < 10 {
 		if slow != 0 && (index[slow] == 0 || index[fast] == 0) {
 			break
 		} else {
-			option := strings.Split(input[slow], "-")[1]
-			value := input[0:2]
+			options := strings.Split(input[index[slow]], "-")
+			if len(options) == 0 {
+				break
+			}
+			option := options[1]
+			if index[fast] == 0 {
+				index[fast] = len(input)
+			}
+			value := input[index[slow]:index[fast]]
 			a.marshaller[option].setValue(value)
 			slow += 1
 			fast += 1

@@ -165,49 +165,26 @@ func Test_schenaparse(t *testing.T) {
 
 func Test_argparse(t *testing.T) {
 	Convey("test arg parse", t, func() {
-		//Convey("test boolparer in input args", func() {
-		//	args := Args{marshaller: make(map[string]Parser)}
-		//	args.schemaparse("l,")
-		//	args.cmdparser([]string{"-l"})
-		//	So(args.getBoolean("l"), ShouldEqual, true)
-		//})
-
-		// TODO to fix the common used case
 		Convey("test string in input args", func() {
 			args := Args{marshaller: make(map[string]Parser)}
-			args.schemaparse("d, p")
-			args.cmdparser([]string{"-d", "/usdsdaf"})
+			args.schemaparse("d,p,l")
+			args.cmdparser([]string{"-d", "/usdsdaf", "-l", "-p", "5678"})
 			So(args.getString("d"), ShouldEqual, "/usdsdaf")
 		})
 
-		//Convey("test int in input args", func() {
-		//	args := Args{marshaller: make(map[string]Parser)}
-		//	args.schemaparse("p,")
-		//	args.cmdparser([]string{"-p", "5674"})
-		//	So(args.getInt("l"), ShouldResemble, true)
-		//})
-
-		//Convey("test stringarray in input args", func() {
-		//	args := Args{marshaller: make(map[string]Parser)}
-		//	args.schemaparse("g,")
-		//	args.cmdparser([]string{"-g", "sadsa", "/dfasf"})
-		//	So(args.getStringarray("g"), ShouldResemble, true)
-		//})
+		Convey("test stringarray in input args", func() {
+			args := Args{marshaller: make(map[string]Parser)}
+			args.schemaparse("g,")
+			args.cmdparser([]string{"-g", "sadsa", "/dfasf", "-l"})
+			So(args.getStringarray("g"), ShouldResemble, [50]string{"sadsa", "/dfasf"})
+		})
 		//
-		//Convey("test intarray in input args", func() {
-		//	args := Args{marshaller: make(map[string]Parser)}
-		//	args.schemaparse("w,")
-		//	args.cmdparser([]string{"-w", "12313", "5212"})
-		//	So(args.getIntarray("w"), ShouldResemble, true)
-		//})
-		//
-		//
-		//Convey("test intarray in input args", func() {
-		//	args := Args{marshaller: make(map[string]Parser)}
-		//	args.schemaparse("w,")
-		//	args.cmdparser([]string{"-w", "12313", "5212"})
-		//	So(args.getIntarray("w"), ShouldResemble, true)
-		//})
+		Convey("test intarray in input args", func() {
+			args := Args{marshaller: make(map[string]Parser)}
+			args.schemaparse("w,")
+			args.cmdparser([]string{"-w", "12313", "5212"})
+			So(args.getIntarray("w"), ShouldResemble, [50]int{12313, 5212})
+		})
 
 	})
 }
