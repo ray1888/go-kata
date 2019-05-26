@@ -1,7 +1,9 @@
 package args2
 
-var intPattern string = "[@]{1}"
-var intArrayPattern string = "[@]{2}"
-var stringPattern string = "[!]{1}"
-var stringArrayPattern string = "[!]{2}"
-var booleanPattern string = "#"
+import "regexp"
+
+var intPattern *regexp.Regexp = regexp.MustCompile("[@]{1}")
+var intArrayPattern *regexp.Regexp = regexp.MustCompile("[@][@]")
+var stringPattern *regexp.Regexp = regexp.MustCompile("[!]{1}")
+var stringArrayPattern *regexp.Regexp = regexp.MustCompile("[!][!]")
+var booleanPattern *regexp.Regexp = regexp.MustCompile("#")

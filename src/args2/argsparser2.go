@@ -1,6 +1,8 @@
 package args2
 
-import "strconv"
+import (
+	"strconv"
+)
 
 type Parser interface {
 	setValue(input []string)
@@ -99,4 +101,28 @@ func (sap *StringArrayParser) setValue(option []string) {
 
 func (sap *StringArrayParser) getValue() interface{} {
 	return sap.val
+}
+
+type ParserFactory struct{}
+
+func (factory *ParserFactory) genParser(pattern string) (Parser, string) {
+	switch {
+	case booleanPattern.MatchString(pattern):
+		option := booleanPattern.Split(pattern, -1)[0]
+		return &BooleanParser{}, option
+	case intArrayPattern.MatchString(pattern):
+		option := intArrayPattern.Split(pattern, -1)[0]
+		return &IntArrayParser{}, option
+	case intPattern.MatchString(pattern):
+		option := intPattern.Split(pattern, -1)[0]
+		return &IntParser{}, option
+	case stringArrayPattern.MatchString(pattern):
+		option := stringArrayPattern.Split(pattern, -1)[0]
+		return &StringArrayParser{}, option
+	case stringPattern.MatchString(pattern):
+		option := stringPattern.Split(pattern, -1)[0]
+		return &StringParser{}, option
+	default:
+		return nil, ""
+	}
 }
