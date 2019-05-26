@@ -1,4 +1,4 @@
-package gokata
+package args
 
 import "strconv"
 
@@ -105,4 +105,22 @@ func (iap *IntArrayParser) setValue(input []string) {
 			}
 		}
 	}
+}
+
+type ParseFactory struct{}
+
+func (pf ParseFactory) createParser(i string) Parser {
+	switch i {
+	case "d":
+		return &StringParser{}
+	case "l":
+		return &BooleanParser{}
+	case "p":
+		return &IntParser{}
+	case "w":
+		return &IntArrayParser{}
+	case "g":
+		return &StringArrayParser{}
+	}
+	return nil
 }

@@ -1,4 +1,4 @@
-package gokata
+package fizzbuzz
 
 import "strconv"
 

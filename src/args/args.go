@@ -1,4 +1,4 @@
-package gokata
+package args
 
 import (
 	"strings"
@@ -12,18 +12,9 @@ type Args struct {
 
 func (a *Args) schemaparse(input string) {
 	schema := strings.Split(input, ",")
+	var pf ParseFactory = ParseFactory{}
 	for _, v := range schema {
-		if v == "d" {
-			a.marshaller[v] = &StringParser{}
-		} else if v == "p" {
-			a.marshaller[v] = &IntParser{}
-		} else if v == "l" {
-			a.marshaller[v] = &BooleanParser{}
-		} else if v == "g" {
-			a.marshaller[v] = &StringArrayParser{}
-		} else if v == "w" {
-			a.marshaller[v] = &IntArrayParser{}
-		}
+		a.marshaller[v] = pf.createParser(v)
 	}
 }
 
